@@ -13,8 +13,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "admins")
-public class Admin {
+public class Admin extends User {
 
-    @Id
-    private long adminID;
+
 }

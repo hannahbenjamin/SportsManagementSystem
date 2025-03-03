@@ -32,8 +32,8 @@ public abstract class User {
     @NotEmpty
     private String password;
 
-    //@NotEmpty
-    //private String role;
+    @NotEmpty
+    private String role;
     // Need to add a constraint so that the role must be player, captain, referee, or admin
 
 }

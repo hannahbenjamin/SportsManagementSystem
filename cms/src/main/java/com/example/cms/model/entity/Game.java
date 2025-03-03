@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -35,19 +36,17 @@ public class Game {
     private String teamID2;
 
     @NotEmpty
-    private int team1score;
+    private int teamScore1;
 
     @NotEmpty
-    private int team2score;
+    private int teamScore2;
 
     @NotEmpty
     private String gameStatus;
+    // upcoming, completed
 
+    @Nullable
     @ManyToOne
-    @JoinColumn(name = "sportID")
-    private Sport sport;
-
-    @ManyToOne
-    @JoinColumn(name = "divisionID")
-    private Division division;
+    @JoinColumn(name="refereeID")
+    private Referee referee;
 }

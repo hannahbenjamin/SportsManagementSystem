@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 
 @Entity
@@ -14,6 +14,10 @@ import java.util.ArrayList;
 @Setter
 @Table(name = "players")
 public class Player extends User{
-    private ArrayList<Team> teamID ;
+
+
+    @ManyToOne // allow multiple players per team
+    @JoinColumn(name = "teamID") // FK
+    private Team team;
 }
 

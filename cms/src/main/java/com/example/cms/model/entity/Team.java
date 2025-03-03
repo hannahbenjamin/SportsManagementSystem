@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,31 +24,21 @@ public class Team {
     private String teamName;
 
     @NotEmpty
-    private int teamCapacity;
+    private String ranking;
 
-    @NotEmpty
-    private ArrayList<Player> players;
+    @OneToMany(mappedBy = "team") // one team can have many players
+    private List<Player> players = new ArrayList<>(); // Initialize the list
 
-    // FIX FOREIGN KEY
-    @OneToMany
-    @JoinColumn(name = "captainID")
+    @OneToOne(mappedBy = "team") // References the field in Captain class
     private Captain captain;
 
     @ManyToOne
-    @JoinColumn(name = "sportID")
-    private Sport sport;
+    @JoinColumn(name = "leagueID")
+    private League league;
 
-    @ManyToOne
-    @JoinColumn(name = "divisionID")
-    private Division division;
-
-    @NotEmpty
-    private String ranking;
-
-    public Team(String teamID, String teamName, String sportID, String divisionID){
+    public Team(String teamID, String teamName, League league){
         this.teamID = teamID;
         this.teamName = teamName;
-        this.sport = sport;
-        this.division = division;
+        this.league = league;
     }
 }
