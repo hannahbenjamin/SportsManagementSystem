@@ -1,23 +1,16 @@
-package com.example.cms.controller.exceptions;
+package com.example.cms.controller;
 
-import com.example.cms.controller.dto.GameDTO;
-import lombok.RequiredArgsConstructor;
+import com.example.cms.model.entity.Game;
+import com.example.cms.model.repository.GameRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/games")
-@RequiredArgsConstructor
+
 public class GameController {
-//    private final GameService gameService;
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<GameDTO> getGame(@PathVariable long id) {
-//        return ResponseEntity.ok(gameService.getGameById(id));
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<GameDTO> createGame(@RequestBody GameDTO gameDTO) {
-//        return ResponseEntity.ok(gameService.createGame(gameDTO));
-//    }
+
 }

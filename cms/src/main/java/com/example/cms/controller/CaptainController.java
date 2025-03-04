@@ -1,24 +1,36 @@
 package com.example.cms.controller;
+import com.example.cms.model.entity.Team;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.cms.model.entity.Captain;
+import com.example.cms.model.repository.CaptainRepository;
+import com.example.cms.model.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/captains")
-@RequiredArgsConstructor
 public class CaptainController {
-//    private final CaptainService captainService;
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<CaptainDTO> getCaptain(@PathVariable long id) {
-//        return ResponseEntity.ok(captainService.getCaptainById(id));
-//    }
-//
-//    @PostMapping
-//    public ResponseEntity<CaptainDTO> createCaptain(@RequestBody CaptainDTO captainDTO) {
-//        return ResponseEntity.ok(captainService.createCaptain(captainDTO));
-//    }
-}
 
+    @Autowired
+    private final CaptainRepository captainRepository;
+
+    public CaptainController(CaptainRepository captainRepository) {
+        this.captainRepository = captainRepository;
+    }
+
+
+    // Get all captains
+    @GetMapping
+    List<Captain> retrieveAllCaptains() {return captainRepository.findAll();}
+
+    // Captain adds player
+    //FINISH LATER
+//    @PutMapping("/captain/{userID}")
+//    Captain
+
+
+
+}

@@ -17,7 +17,7 @@ public class Player extends User{
 
 
     @ManyToOne // allow multiple players per team
-    @JoinColumn(name = "teamID") // FK
+    @JoinColumn(name = "teamID", nullable = true) // FK
     private Team team;
 }
 
