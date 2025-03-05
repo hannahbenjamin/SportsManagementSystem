@@ -29,11 +29,13 @@ public class Game {
     @NotEmpty
     private String location;
 
-    @NotEmpty
-    private String teamID1;
+    @ManyToOne
+    @JoinColumn(name = "team1_ID")
+    private Team team1;
 
-    @NotEmpty
-    private String teamID2;
+    @ManyToOne
+    @JoinColumn(name = "team2_ID")
+    private Team team2;
 
     @NotEmpty
     private int teamScore1;

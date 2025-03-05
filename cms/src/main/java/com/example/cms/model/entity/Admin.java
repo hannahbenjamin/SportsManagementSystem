@@ -1,5 +1,6 @@
 package com.example.cms.model.entity;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,3 +18,4 @@ public class Admin extends User {
 
 
 }
+

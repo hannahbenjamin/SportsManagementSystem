@@ -8,20 +8,29 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
 
-    @Query("SELECT p FROM Player p")
+
+    // FIND ALL PLAYERS
+    @Query(value = "SELECT p FROM Player p", nativeQuery = true)
     List<Player> findAllPlayers();
 
-    // Query to find the captain of a given team
-    @Query("SELECT p FROM Player p WHERE p.team.id = :teamId AND p.isCaptain = true")
-    Player findCaptainByTeamId(@Param("teamId") Long teamId);
+    // GET CAPTAIN INFORMATION
+    @Query(value = "SELECT new map(c.firstName as firstName, c.lastName as lastName, c.email as email)" +
+            " FROM Captain c WHERE c.team.teamID = :teamId", nativeQuery = true)                    // Note: Map allows us to return multiple strings
+    Optional<Map<String, String>> findCaptainInformationByTeamId(@Param("teamId") String teamId);    // Note: optional prevents it from breaking
 
-    // Query to get all games for a player's team
-    @Query("SELECT g FROM Game g WHERE g.team1.id = :teamId OR g.team2.id = :teamId")
-    List<Game> findTeamSchedule(@Param("teamId") Long teamId);
+
+    // RETRIEVE TEAM SCHEDULE BY GETTING ALL GAMES
+    // Note: since there are two teams in each game, we have to make sure we cover both team1 and team2
+    @Query(value = "SELECT g FROM Game g WHERE g.team1.teamID = :teamId OR g.team2.teamID = :teamId", nativeQuery = true)
+    List<Game> findTeamSchedule(@Param("teamId") String teamId);
+
 }
 

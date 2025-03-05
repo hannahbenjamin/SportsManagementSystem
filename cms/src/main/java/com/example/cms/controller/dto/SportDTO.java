@@ -15,6 +15,6 @@ public class SportDTO {
     private long sportID;
     private String sportName;
     private int teamSize;
-    private List<DivisionDTO> divisions;
+    //private List<DivisionDTO> divisions;
 }
 
