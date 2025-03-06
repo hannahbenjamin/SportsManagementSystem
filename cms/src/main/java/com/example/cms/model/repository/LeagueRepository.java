@@ -14,10 +14,6 @@ import java.util.List;
 @Repository
 public interface LeagueRepository extends JpaRepository<League, Long> {
 
-    // Get all leagues
-    @Query("SELECT l FROM League l")
-    List<League> findAllLeagues();
-
 //    // Get a specific league by ID
 //    @Query("SELECT l FROM League l WHERE l.leagueID = :leagueID")
 //    League findLeagueById(Long leagueID);

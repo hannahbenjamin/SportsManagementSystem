@@ -17,8 +17,8 @@ public class GameController {
 
     // Get all games
     @GetMapping
-    public List<Game> getAllGames() {
-        return gameRepository.findAllGames();
+    public List<Game> retreiveAllGames() {
+        return gameRepository.findAll();
     }
 
     // Get game by ID

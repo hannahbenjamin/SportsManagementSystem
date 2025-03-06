@@ -21,6 +21,9 @@ public class League {
     private String leagueName;
 
     @NotEmpty
+    private String divisionNum;
+
+    @NotEmpty
     private String leagueSport;
 
     @NotEmpty

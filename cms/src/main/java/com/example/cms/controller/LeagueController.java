@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/leagues")
+@RequestMapping("/leagues")
 public class LeagueController {
 
 
@@ -26,11 +26,10 @@ public class LeagueController {
         this.leagueRepository = leagueRepository;
     }
 
-
     // Get all leagues
-    @GetMapping("/")
-    public List<League> getAllLeagues() {
-        return leagueRepository.findAllLeagues();
+    @GetMapping("")
+    public List<League> retrieveAllLeagues() {
+        return leagueRepository.findAll();
     }
 
 

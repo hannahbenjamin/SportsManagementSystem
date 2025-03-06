@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("teams")
+@RequestMapping("/teams")
 public class TeamController {
 
     private final TeamRepository teamRepository;
@@ -25,9 +25,9 @@ public class TeamController {
     }
 
     // Get all teams
-    @GetMapping("/")
+    @GetMapping("")
     public List<Team> getAllTeams() {
-        return teamRepository.findAllTeams();
+        return teamRepository.findAll();
     }
 //
 //    // Get a team by ID

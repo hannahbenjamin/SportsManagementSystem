@@ -15,10 +15,6 @@ import java.util.List;
 @Repository
 public interface TeamRepository extends JpaRepository<Team, Long> {
 
-    // Get all teams
-    @Query("SELECT t FROM Team t")
-    List<Team> findAllTeams();
-
 //    // Get a specific team by ID
 //    @Query("SELECT t FROM Team t WHERE t.teamID = :teamID")
 //    Team findTeamById(Long teamID);
