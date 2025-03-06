@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "referee")
+@Table(name = "referees")
 
 public class Referee extends User{
 

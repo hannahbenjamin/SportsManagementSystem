@@ -16,11 +16,6 @@ import java.util.Optional;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Long> {
 
-
-    // FIND ALL PLAYERS
-    @Query(value = "SELECT p FROM Player p", nativeQuery = true)
-    List<Player> findAllPlayers();
-
     // GET CAPTAIN INFORMATION
     @Query(value = "SELECT new map(c.firstName as firstName, c.lastName as lastName, c.email as email)" +
             " FROM Captain c WHERE c.team.teamID = :teamId", nativeQuery = true)                    // Note: Map allows us to return multiple strings

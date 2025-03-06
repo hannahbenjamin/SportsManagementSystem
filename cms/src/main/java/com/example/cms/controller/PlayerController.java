@@ -1,6 +1,7 @@
 package com.example.cms.controller;
 
 import com.example.cms.controller.exceptions.PlayerNotFoundException;
+import com.example.cms.model.entity.Captain;
 import com.example.cms.model.entity.Game;
 import com.example.cms.model.entity.Player;
 import com.example.cms.model.entity.User;
@@ -20,8 +21,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/players")
-//@RequiredArgsConstructor
+@RequestMapping("/players")
 public class PlayerController {
 
 
@@ -32,37 +32,39 @@ public class PlayerController {
     }
 
     // FIND ALL PLAYERS
-    @GetMapping("/players")
-    List<Player> findAllPlayers() {return repository.findAll();}
+    @GetMapping
+    List<Player> retrieveAllPlayers() {
+        return repository.findAll();
+    }
 
     // RETRIEVE PLAYER
-    @GetMapping("/players/{playerId}")
-    Player retreivePlayer(@PathVariable("playerId") Long userID){
-        return repository.findById(userID)
-                .orElseThrow(() -> new PlayerNotFoundException(userID));
-    }
-
-    // CONSIDER MAKING IT SO THAT USER CAN UPDATE THEIR INFORMATION
-    // (firstName, lastName, email, password)
-
-    // GET CAPTAIN INFO
-    @GetMapping("/players/getCaptainInfo/{teamId}")
-    public ResponseEntity<?> retrieveCaptainInfo(@PathVariable("teamId") String teamId) {
-        Optional<Map<String, String>> captainInfo = repository.findCaptainInformationByTeamId(teamId);
-
-        // Check to make sure that captain exists for the inputted teamId
-        if (captainInfo.isPresent()) {
-            return ResponseEntity.ok(captainInfo.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Captain not found for team ID: " + teamId);
-        }
-    }
-
-    // GET TEAM SCHEDULE
-    @GetMapping("/players/getSchedule/{teamId}")
-    public ResponseEntity<List<Game>> retrieveTeamSchedule(@PathVariable("teamId") String teamId) {
-        List<Game> games = repository.findTeamSchedule(teamId);
-        return ResponseEntity.ok(games);
-        // ADD EXCEPTION WHEN no games are found for team ID
-    }
+//    @GetMapping("/players/{playerId}")
+//    Player retreivePlayer(@PathVariable("playerId") Long userID){
+//        return repository.findById(userID)
+//                .orElseThrow(() -> new PlayerNotFoundException(userID));
+//    }
+//
+//    // CONSIDER MAKING IT SO THAT USER CAN UPDATE THEIR INFORMATION
+//    // (firstName, lastName, email, password)
+//
+//    // GET CAPTAIN INFO
+//    @GetMapping("/players/getCaptainInfo/{teamId}")
+//    public ResponseEntity<?> retrieveCaptainInfo(@PathVariable("teamId") String teamId) {
+//        Optional<Map<String, String>> captainInfo = repository.findCaptainInformationByTeamId(teamId);
+//
+//        // Check to make sure that captain exists for the inputted teamId
+//        if (captainInfo.isPresent()) {
+//            return ResponseEntity.ok(captainInfo.get());
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Captain not found for team ID: " + teamId);
+//        }
+//    }
+//
+//    // GET TEAM SCHEDULE
+//    @GetMapping("/players/getSchedule/{teamId}")
+//    public ResponseEntity<List<Game>> retrieveTeamSchedule(@PathVariable("teamId") String teamId) {
+//        List<Game> games = repository.findTeamSchedule(teamId);
+//        return ResponseEntity.ok(games);
+//        // ADD EXCEPTION WHEN no games are found for team ID
+//    }
 }

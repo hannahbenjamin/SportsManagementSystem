@@ -18,9 +18,6 @@ import java.util.List;
 @Repository
 public interface CaptainRepository extends JpaRepository<Captain, Long> {
 
-    @Query("SELECT c FROM Captain c")
-    List<Captain> findAllCaptains();
-
     // ADD PLAYER TO TEAM
     // does this by changing the player's teamID to the captains teamID
     @Modifying

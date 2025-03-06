@@ -17,11 +17,6 @@ import java.util.List;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
 
-
-    @Query("SELECT a FROM Admin a")
-    List<Admin> findAllAdmins();
-
-
     // Create a new league
     @Transactional
     @Modifying

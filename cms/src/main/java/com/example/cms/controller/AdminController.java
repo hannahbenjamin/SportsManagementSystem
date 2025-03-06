@@ -11,28 +11,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
     @CrossOrigin
     @RestController
-    @RequestMapping("/admin")
+    @RequestMapping("/admins")
     class AdminController {
 
-        private final AdminRepository repository;
+        private final AdminRepository adminRepository;
 
 
         @Autowired
-        AdminController(AdminRepository repository) {
-            this.repository = repository;
+        AdminController(AdminRepository adminRepository) {
+            this.adminRepository = adminRepository;
         }
 
         // Get all admins
-        @GetMapping("/all")
+        @GetMapping()
         List<Admin> retrieveAllAdmin() {
-            return repository.findAll();
+            return adminRepository.findAll();
         }
 
         // Create a new league
 //        @PostMapping("/league")
 //        String createLeague(@RequestBody LeagueDTO leagueDTO) {
 //            try {
-//                repository.createLeague(
+//                adminRepository.createLeague(
 //                        leagueDTO.getLeagueName(),
 //                        leagueDTO.getLeagueGender(),
 //                        leagueDTO.getLeagueSport(),
@@ -48,7 +48,7 @@ import java.util.List;
         @DeleteMapping("/league/{leagueId}")
         String deleteLeague(@PathVariable Long leagueId) {
             try {
-                repository.deleteLeague(leagueId);
+                adminRepository.deleteLeague(leagueId);
                 return "League deleted successfully.";
             } catch (Exception e) {
                 return "Error deleting league: " + e.getMessage();
@@ -62,7 +62,7 @@ import java.util.List;
                           @RequestParam Long leagueID,
                           @RequestParam int ranking) {
             try {
-                repository.createTeam(teamName, captainUserID, leagueID, ranking);
+                adminRepository.createTeam(teamName, captainUserID, leagueID, ranking);
                 return "Team created successfully.";
             } catch (Exception e) {
                 return "Error creating team: " + e.getMessage();
@@ -73,7 +73,7 @@ import java.util.List;
         @DeleteMapping("/team/{teamId}")
         String deleteTeam(@PathVariable Long teamId) {
             try {
-                repository.deleteTeam(teamId);
+                adminRepository.deleteTeam(teamId);
                 return "Team deleted successfully.";
             } catch (Exception e) {
                 return "Error deleting team: " + e.getMessage();
@@ -90,7 +90,7 @@ import java.util.List;
                           @RequestParam int[] score,
                           @RequestParam String status) {
             try {
-                repository.createGame(leagueID, date, time, teamID1, teamID2, score, status);
+                adminRepository.createGame(leagueID, date, time, teamID1, teamID2, score, status);
                 return "Game created successfully.";
             } catch (Exception e) {
                 return "Error creating game: " + e.getMessage();
@@ -101,7 +101,7 @@ import java.util.List;
         @DeleteMapping("/game/{gameId}")
         String deleteGame(@PathVariable Long gameId) {
             try {
-                repository.deleteGame(gameId);
+                adminRepository.deleteGame(gameId);
                 return "Game deleted successfully.";
             } catch (Exception e) {
                 return "Error deleting game: " + e.getMessage();
@@ -113,7 +113,7 @@ import java.util.List;
         String assignCaptain(@PathVariable Long teamId,
                              @RequestParam Long captainUserID) {
             try {
-                repository.assignCaptain(teamId, captainUserID);
+                adminRepository.assignCaptain(teamId, captainUserID);
                 return "Captain assigned successfully.";
             } catch (Exception e) {
                 return "Error assigning captain: " + e.getMessage();
@@ -124,7 +124,7 @@ import java.util.List;
         @PostMapping("/game/{gameId}/referee")
         String assignReferee(@PathVariable Long gameId, @RequestParam Long refereeUserId) {
             try {
-                repository.assignReferee(refereeUserId, gameId);
+                adminRepository.assignReferee(refereeUserId, gameId);
                 return "Referee assigned successfully.";
             } catch (Exception e) {
                 return "Error assigning referee: " + e.getMessage();
@@ -136,7 +136,7 @@ import java.util.List;
         String updateGameScore(@PathVariable Long gameId,
                                @RequestParam int[] score) {
             try {
-                repository.updateGameScore(gameId, score);
+                adminRepository.updateGameScore(gameId, score);
                 return "Game score updated successfully.";
             } catch (Exception e) {
                 return "Error updating game score: " + e.getMessage();
@@ -148,7 +148,7 @@ import java.util.List;
         String updateGameStatus(@PathVariable Long gameId,
                                 @RequestParam String status) {
             try {
-                repository.updateGameStatus(gameId, status);
+                adminRepository.updateGameStatus(gameId, status);
                 return "Game status updated successfully.";
             } catch (Exception e) {
                 return "Error updating game status: " + e.getMessage();

@@ -51,4 +51,9 @@ public class Game {
     @ManyToOne
     @JoinColumn(name="refereeID")
     private Referee referee;
+
+    @ManyToOne
+    @JoinColumn(name = "leagueId")
+    private League league;
+
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/teams")
+@RequestMapping("teams")
 public class TeamController {
 
     private final TeamRepository teamRepository;
@@ -29,39 +29,39 @@ public class TeamController {
     public List<Team> getAllTeams() {
         return teamRepository.findAllTeams();
     }
-
-    // Get a team by ID
-    @GetMapping("/{teamID}")
-    public Team getTeamById(@PathVariable Long teamID) {
-        return teamRepository.findTeamById(teamID);
-    }
-
-    // Get all players in a team
-    @GetMapping("/{teamID}/players")
-    public List<Player> getPlayersByTeamId(@PathVariable Long teamID) {
-        return teamRepository.findPlayersByTeamId(teamID);
-    }
-
-    // Get the captain of a team
-    @GetMapping("/{teamID}/captain")
-    public Player getCaptain(@PathVariable Long teamID) {
-        return teamRepository.findCaptainByTeamId(teamID);
-    }
-
-    // Get the schedule of a team (all games in which the team is involved)
-    @GetMapping("/{teamID}/schedule")
-    public List<Game> getSchedule(@PathVariable Long teamID) {
-        return teamRepository.findScheduleByTeamId(teamID);
-    }
-
-    // Get the standings of a league (optional, can be based on league-related team rankings)
-    @GetMapping("/{teamID}/standings")
-    public List<Team> getTeamStandings(@PathVariable Long teamID) {
-        // Optionally, you can use the team repository to get standings if required
-        // For simplicity, assuming this is related to a league
-        String leagueID = teamRepository.findTeamById(teamID).getLeague().getLeagueID();
-        return teamRepository.getStandingsByLeagueId(leagueID);
-    }
+//
+//    // Get a team by ID
+//    @GetMapping("/{teamID}")
+//    public Team getTeamById(@PathVariable Long teamID) {
+//        return teamRepository.findTeamById(teamID);
+//    }
+//
+//    // Get all players in a team
+//    @GetMapping("/{teamID}/players")
+//    public List<Player> getPlayersByTeamId(@PathVariable Long teamID) {
+//        return teamRepository.findPlayersByTeamId(teamID);
+//    }
+//
+//    // Get the captain of a team
+//    @GetMapping("/{teamID}/captain")
+//    public Player getCaptain(@PathVariable Long teamID) {
+//        return teamRepository.findCaptainByTeamId(teamID);
+//    }
+//
+//    // Get the schedule of a team (all games in which the team is involved)
+//    @GetMapping("/{teamID}/schedule")
+//    public List<Game> getSchedule(@PathVariable Long teamID) {
+//        return teamRepository.findScheduleByTeamId(teamID);
+//    }
+//
+//    // Get the standings of a league (optional, can be based on league-related team rankings)
+//    @GetMapping("/{teamID}/standings")
+//    public List<Team> getTeamStandings(@PathVariable Long teamID) {
+//        // Optionally, you can use the team repository to get standings if required
+//        // For simplicity, assuming this is related to a league
+//        String leagueID = teamRepository.findTeamById(teamID).getLeague().getLeagueID();
+//        return teamRepository.getStandingsByLeagueId(leagueID);
+//    }
 }
 
 

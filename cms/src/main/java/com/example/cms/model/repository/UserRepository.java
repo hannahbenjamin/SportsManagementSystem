@@ -11,8 +11,8 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u")
-    List<User> findAllUsers();
+//    @Query("SELECT u FROM User u")
+//    List<User> findAllUsers();
 
     // Create query for selecting by first name
 

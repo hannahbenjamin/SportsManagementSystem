@@ -12,5 +12,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AdminDTO {
     private long adminID;
+    private long userID;
+    private String firstName;
+    private String lastName;
+    private String email;
 }
 

@@ -24,15 +24,15 @@ public class UserController {
     // FIND ALL USERS
     @GetMapping("/users")
     List<User> retrieveAllUsers() {
-        return repository.findAllUsers();
+        return repository.findAll();
     }
 
     // RETRIEVE USER based on userId
-    @GetMapping("/users/{userId}")
-    User retrieveUser(@PathVariable("userId") Long userId) {
-        return repository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(userId));
-    }
+//    @GetMapping("/users/{userId}")
+//    User retrieveUser(@PathVariable("userId") Long userId) {
+//        return repository.findById(userId)
+//                .orElseThrow(() -> new UserNotFoundException(userId));
+//    }
 }
 
 

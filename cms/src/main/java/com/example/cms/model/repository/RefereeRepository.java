@@ -37,38 +37,38 @@ public interface RefereeRepository extends JpaRepository<Referee, Long> {
     List<Game> getAllGames();
 
     // get list of games with specific referee assigned
-    @Modifying
-    @Transactional
-    @Query("SELECT g FROM Game g WHERE g.referee.userID = :userID")
-    List<Game> getGamesAssigned(@Param("userID") Long userID);
-
-
-    // assign specific referee to game
-    @Modifying
-    @Transactional
-    @Query("UPDATE Game g SET g.referee = (SELECT r FROM Referee r WHERE r.userID = :userID) WHERE g.gameID = :gameID")
-    int assignRefereeToGame(@Param("gameID") Long gameID, @Param("userID") Long userID);
-
-
-    // update game status to finished (when referee is assigned to game)
-    @Modifying
-    @Transactional
-    @Query("UPDATE Game g SET g.status = 'Finished' WHERE g.gameID = :gameID AND g.referee IS NOT NULL")
-    int setGameStatusToFinished(@Param("gameID") Long gameID);
-
-
-    // specific referee assigned to game updates game score
-    @Modifying
-    @Transactional
-    @Query("UPDATE Game g SET g.score = :score WHERE g.gameID = :gameID AND g.referee = (SELECT r FROM Referee r WHERE r.userID = :userID)")
-    int updateGameScore(@Param("gameID") Long gameID, @Param("userID") Long userID, @Param("score") int[] score);
-
-
-    // game status is either upcoming (game not played) or completed (game played) -> (updates when referee updates score)
-    @Query("UPDATE Game g SET g.score = :score, g.status = " +
-            "CASE WHEN :score IS NOT NULL THEN 'Completed' ELSE g.status END " +
-            "WHERE g.gameID = :gameID AND g.referee = (SELECT r FROM Referee r WHERE r.userID = :userID)")
-    int updateGameScoreAndStatus(@Param("gameID") Long gameID, @Param("userID") Long userID, @Param("score") int[] score);
+//    @Modifying
+//    @Transactional
+//    @Query("SELECT g FROM Game g WHERE g.referee.userID = :userID")
+//    List<Game> getGamesAssigned(@Param("userID") Long userID);
+//
+//
+//    // assign specific referee to game
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE Game g SET g.referee = (SELECT r FROM Referee r WHERE r.userID = :userID) WHERE g.gameID = :gameID")
+//    int assignRefereeToGame(@Param("gameID") Long gameID, @Param("userID") Long userID);
+//
+//
+//    // update game status to finished (when referee is assigned to game)
+//    @Modifying
+//    @Transactional
+//    @Query("UPDATE Game g SET g.status = 'Finished' WHERE g.gameID = :gameID AND g.referee IS NOT NULL")
+//    int setGameStatusToFinished(@Param("gameID") Long gameID);
+//
+//
+//    // specific referee assigned to game updates game score
+////    @Modifying
+////    @Transactional
+////    @Query("UPDATE Game g SET g.score = :score WHERE g.gameID = :gameID AND g.referee = (SELECT r FROM Referee r WHERE r.userID = :userID)")
+////    int updateGameScore(@Param("gameID") Long gameID, @Param("userID") Long userID, @Param("score") int[] score);
+//
+//
+//    // game status is either upcoming (game not played) or completed (game played) -> (updates when referee updates score)
+//    @Query("UPDATE Game g SET g.score = :score, g.status = " +
+//            "CASE WHEN :score IS NOT NULL THEN 'Completed' ELSE g.status END " +
+//            "WHERE g.gameID = :gameID AND g.referee = (SELECT r FROM Referee r WHERE r.userID = :userID)")
+//    int updateGameScoreAndStatus(@Param("gameID") Long gameID, @Param("userID") Long userID, @Param("score") int[] score);
 
 
 }
