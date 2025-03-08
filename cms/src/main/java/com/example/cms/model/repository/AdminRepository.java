@@ -34,14 +34,19 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     void createTeam(
             @Param("teamID") String teamID,
             @Param("teamName") String teamName,
-            @Param("captainID") Long captainID,
+            @Param("captainID") String captainID,
             @Param("leagueID") String leagueID);
 
     // Assign a captain to a team
     @Modifying
     @Transactional
-    @Query(value = "UPDATE teams SET captainID = :captainID WHERE teamID = :teamID", nativeQuery = true)
-    void assignCaptain(@Param("teamID") String teamID, @Param("captainID") Long captainID);
+    @Query(value = "UPDATE teams SET captainID = :captainID WHERE teamID = :teamID " +
+            "AND EXISTS (SELECT 1 FROM admins WHERE userID = :adminID AND role = 'admin')",
+            nativeQuery = true)
+    void assignCaptainByAdmin(
+            @Param("teamID") String teamID,
+            @Param("captainID") String captainID,  // Changed to String to match User entity
+            @Param("adminID") String adminID);     // Changed to String to match User entity
 
     // Create a new game
     @Modifying
@@ -98,4 +103,14 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     @Transactional
     @Query(value = "DELETE FROM games WHERE gameID = :gameID", nativeQuery = true)
     void deleteGame(@Param("gameID") Long gameID);
+
+    // Remove a captain from a team
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE teams SET captainID = NULL WHERE teamID = :teamID " +
+            "AND EXISTS (SELECT 1 FROM admins WHERE userID = :adminID AND role = 'admin')",
+            nativeQuery = true)
+    void removeCaptainByAdmin(
+            @Param("teamID") String teamID,// Changed to String to match User entity
+            @Param("adminID") String adminID);     // Changed to String to match User entity
 }

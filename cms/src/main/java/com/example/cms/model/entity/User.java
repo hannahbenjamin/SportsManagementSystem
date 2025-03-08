@@ -18,7 +18,7 @@ import javax.validation.constraints.NotEmpty;
 public abstract class User {
 
     @Id
-    private long userID;
+    private String userID;
 
     @NotEmpty
     private String firstName;

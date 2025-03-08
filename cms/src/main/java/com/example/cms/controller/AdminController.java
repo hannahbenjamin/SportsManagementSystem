@@ -64,7 +64,7 @@ class AdminController {
     @PostMapping("/team")
     String createTeam(@RequestParam String teamID,
                       @RequestParam String teamName,
-                      @RequestParam Long captainID,
+                      @RequestParam String captainID,
                       @RequestParam String leagueID) {
         try {
             adminRepository.createTeam(teamID, teamName, captainID, leagueID);
@@ -121,10 +121,12 @@ class AdminController {
 
     // Assign captain to a team
     @PutMapping("/team/{teamId}/captain/{captainId}")
-    String assignCaptain(@PathVariable String teamId,
-                         @PathVariable Long captainId) {
+    public String assignCaptain(
+            @PathVariable String teamId,
+            @PathVariable String captainId,  // Changed to String
+            @RequestParam String adminId) {  // Changed to String
         try {
-            adminRepository.assignCaptain(teamId, captainId);
+            adminRepository.assignCaptainByAdmin(teamId, captainId, adminId);
             return "Captain assigned successfully.";
         } catch (Exception e) {
             return "Error assigning captain: " + e.getMessage();
@@ -164,6 +166,18 @@ class AdminController {
             return "Game status updated successfully.";
         } catch (Exception e) {
             return "Error updating game status: " + e.getMessage();
+        }
+    }
+    // Remove captain to a team
+    @DeleteMapping("/team/{teamId}/captain")
+    public String removeCaptain(
+            @PathVariable String teamId,
+            @RequestParam String adminId) {
+        try {
+            adminRepository.removeCaptainByAdmin(teamId, adminId);
+            return "Captain removed successfully.";
+        } catch (Exception e) {
+            return "Error removing captain: " + e.getMessage();
         }
     }
 }

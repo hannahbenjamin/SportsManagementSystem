@@ -33,8 +33,10 @@ INSERT INTO teams (teamID, teamName, captainID, leagueID) VALUES
 ('T001', 'Team A', 1, 'L003'),
 ('T002', 'Team B', 2, 'L004'),
 ('T003', 'Team C', 3, 'L004'),
-('T004', 'Team D', 4, 'L004'),
-('T005', 'Team E', 5, 'L001');
+('T004', 'Team D', 4, 'L004');
+-- testing creating team without captain
+INSERT INTO teams (teamID, teamName, leagueID) VALUES
+('T005', 'Team Without Captain', 'L001');
 
 -- Insert into games
 INSERT INTO games (gameID, datetime, location, team1ID, team2ID, teamScore1, teamScore2, gameStatus, refereeID, leagueID) VALUES
