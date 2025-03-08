@@ -1,4 +1,6 @@
 package com.example.cms.model.entity;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,10 +36,11 @@ public class League {
     // CONNECT TEAMS TO LEAGUE
     @OneToMany(mappedBy = "league")
     @Nullable
+    @JsonManagedReference("league-teams")
     private List<Team> teams = new ArrayList<>();
 
     // CONNECT GAMES TO LEAGUE
     @OneToMany(mappedBy = "league")
+    @JsonManagedReference("league-games")
     private List<Game> games = new ArrayList<>();
 }
-

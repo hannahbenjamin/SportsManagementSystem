@@ -1,5 +1,6 @@
 package com.example.cms.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ public class Referee extends User{
     // A referee can have many games but a game can only have one referee
     @OneToMany(mappedBy = "referee")
     @Nullable
+    @JsonManagedReference("referee-games")
     private List<Game> games = new ArrayList<>();
 
 }

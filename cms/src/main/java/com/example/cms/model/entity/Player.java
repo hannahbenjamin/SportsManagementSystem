@@ -1,5 +1,6 @@
 package com.example.cms.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ public class Player extends User{
 
     @ManyToOne // allow multiple players per team
     @JoinColumn(name = "teamID") // FK
+    @JsonBackReference("team-players")
     private Team team;
 }
 

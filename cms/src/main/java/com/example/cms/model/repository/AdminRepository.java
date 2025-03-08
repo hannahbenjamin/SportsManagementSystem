@@ -1,6 +1,5 @@
 package com.example.cms.model.repository;
 
-
 import com.example.cms.model.entity.Admin;
 import com.example.cms.model.entity.League;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,10 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-
 import javax.transaction.Transactional;
 import java.util.List;
-
 
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Long> {
@@ -20,87 +17,85 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
     // Create a new league
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO League (leagueName, gender, sport, schedule) " +
-            "VALUES (:leagueName, :gender, :sport, :schedule)", nativeQuery = true)
-    void createLeague(@Param("leagueName") String leagueName,
-                      @Param("gender") String gender,
-                      @Param("sport") String sport,
-                      @Param("schedule") String schedule);
-
+    @Query(value = "INSERT INTO leagues (leagueID, leagueName, leagueGender, divisionNum, leagueSport) " +
+            "VALUES (:leagueID, :leagueName, :leagueGender, :divisionNum, :leagueSport)", nativeQuery = true)
+    void createLeague(
+            @Param("leagueID") String leagueID,
+            @Param("leagueName") String leagueName,
+            @Param("leagueGender") String leagueGender,
+            @Param("divisionNum") String divisionNum,
+            @Param("leagueSport") String leagueSport);
 
     // Create a new team
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Team (teamName, captainUserID, leagueID, ranking) " +
-            "VALUES (:teamName, :captainUserID, :leagueID, :ranking)", nativeQuery = true)
-    void createTeam(@Param("teamName") String teamName,
-                    @Param("captainUserID") Long captainUserID,
-                    @Param("leagueID") Long leagueID,
-                    @Param("ranking") int ranking);
-
+    @Query(value = "INSERT INTO teams (teamID, teamName, captainID, leagueID) " +
+            "VALUES (:teamID, :teamName, :captainID, :leagueID)", nativeQuery = true)
+    void createTeam(
+            @Param("teamID") String teamID,
+            @Param("teamName") String teamName,
+            @Param("captainID") Long captainID,
+            @Param("leagueID") String leagueID);
 
     // Assign a captain to a team
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Team t SET t.captainUserID = :captainUserID WHERE t.id = :teamId", nativeQuery = true)
-    void assignCaptain(@Param("teamId") Long teamId, @Param("captainUserID") Long captainUserID);
-
+    @Query(value = "UPDATE teams SET captainID = :captainID WHERE teamID = :teamID", nativeQuery = true)
+    void assignCaptain(@Param("teamID") String teamID, @Param("captainID") Long captainID);
 
     // Create a new game
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Game (leagueID, date, time, teamID1, teamID2, score, status) " +
-            "VALUES (:leagueID, :date, :time, :teamID1, :teamID2, :score, :status)", nativeQuery = true)
-    void createGame(@Param("leagueID") Long leagueID,
-                    @Param("date") String date,
-                    @Param("time") String time,
-                    @Param("teamID1") Long teamID1,
-                    @Param("teamID2") Long teamID2,
-                    @Param("score") int[] score,
-                    @Param("status") String status);
-
+    @Query(value = "INSERT INTO games (gameID, datetime, location, team1ID, team2ID, teamScore1, teamScore2, gameStatus, refereeID, leagueID) " +
+            "VALUES (:gameID, :datetime, :location, :team1ID, :team2ID, :teamScore1, :teamScore2, :gameStatus, :refereeID, :leagueID)", nativeQuery = true)
+    void createGame(
+            @Param("gameID") Long gameID,
+            @Param("datetime") String datetime,
+            @Param("location") String location,
+            @Param("team1ID") String team1ID,
+            @Param("team2ID") String team2ID,
+            @Param("teamScore1") int teamScore1,
+            @Param("teamScore2") int teamScore2,
+            @Param("gameStatus") String gameStatus,
+            @Param("refereeID") Long refereeID,
+            @Param("leagueID") String leagueID);
 
     // Assign a referee to a game
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO Game_Referee (game_id, referee_user_id) " +
-            "VALUES (:gameId, :refereeUserId)", nativeQuery = true)
-    void assignReferee(@Param("refereeUserId") Long refereeUserId, @Param("gameId") Long gameId);
+    @Query(value = "UPDATE games SET refereeID = :refereeID WHERE gameID = :gameID", nativeQuery = true)
+    void assignReferee(@Param("gameID") Long gameID, @Param("refereeID") Long refereeID);
 
-
-    // Update the game score (Admins have no restrictions)
+    // Update the game score
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Game g SET g.score = :score WHERE g.id = :gameId", nativeQuery = true)
-    void updateGameScore(@Param("gameId") Long gameId, @Param("score") int[] score);
+    @Query(value = "UPDATE games SET teamScore1 = :teamScore1, teamScore2 = :teamScore2 WHERE gameID = :gameID", nativeQuery = true)
+    void updateGameScore(
+            @Param("gameID") Long gameID,
+            @Param("teamScore1") int teamScore1,
+            @Param("teamScore2") int teamScore2);
 
-
-    // Update game status (Admins have no restrictions)
+    // Update game status
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Game g SET g.status = :status WHERE g.id = :gameId", nativeQuery = true)
-    void updateGameStatus(@Param("gameId") Long gameId, @Param("status") String status);
-
+    @Query(value = "UPDATE games SET gameStatus = :gameStatus WHERE gameID = :gameID", nativeQuery = true)
+    void updateGameStatus(@Param("gameID") Long gameID, @Param("gameStatus") String gameStatus);
 
     // Delete a league
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM League WHERE id = :leagueId", nativeQuery = true)
-    void deleteLeague(@Param("leagueId") Long leagueId);
-
+    @Query(value = "DELETE FROM leagues WHERE leagueID = :leagueID", nativeQuery = true)
+    void deleteLeague(@Param("leagueID") String leagueID);
 
     // Delete a team
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM Team WHERE id = :teamId", nativeQuery = true)
-    void deleteTeam(@Param("teamId") Long teamId);
-
+    @Query(value = "DELETE FROM teams WHERE teamID = :teamID", nativeQuery = true)
+    void deleteTeam(@Param("teamID") String teamID);
 
     // Delete a game
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM Game WHERE id = :gameId", nativeQuery = true)
-    void deleteGame(@Param("gameId") Long gameId);
+    @Query(value = "DELETE FROM games WHERE gameID = :gameID", nativeQuery = true)
+    void deleteGame(@Param("gameID") Long gameID);
 }
-
-

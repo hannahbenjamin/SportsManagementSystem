@@ -1,5 +1,6 @@
 package com.example.cms.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,10 +31,12 @@ public class Game {
     private String location;
 
     @ManyToOne
+    @JsonBackReference("team1-games")
     @JoinColumn(name = "team1ID", nullable = false)
     private Team team1;
 
     @ManyToOne
+    @JsonBackReference("team2-games")
     @JoinColumn(name = "team2ID", nullable = false)
     private Team team2;
 
@@ -49,10 +52,12 @@ public class Game {
 
     @ManyToOne
     @Nullable
+    @JsonBackReference("referee-games")
     @JoinColumn(name = "refereeID")
     private Referee referee;
 
     @ManyToOne
     @JoinColumn(name = "leagueID")
+    @JsonBackReference("league-games")
     private League league;
 }

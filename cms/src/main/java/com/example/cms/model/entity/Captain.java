@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @NoArgsConstructor
@@ -21,7 +23,8 @@ public class Captain extends User{
 //    @JoinColumn(name = "teamID") // FK
 //    private Team team;
 
-    @OneToOne(mappedBy = "captain") // This is the inverse side of the relationship
+    @OneToOne(mappedBy = "captain")
+    @JsonBackReference("team-captain")
     private Team team;
 
 }
