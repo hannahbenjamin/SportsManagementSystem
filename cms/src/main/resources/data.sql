@@ -28,28 +28,26 @@ INSERT INTO leagues (leagueID, leagueName, leagueGender, divisionNum, leagueSpor
 ('L004', 'WDiv1Volleyball', 'Womens', 'Division1', 'Volleyball');
 
 -- Insert into Teams
-INSERT INTO teams (teamID, teamName, ranking)
-VALUES ('T001', 'City Strikers', '1');
---('T002', 'Downtown Defenders', '2', 'L001'),
---('T003', 'River Runners', '1', 'L002'),
---('T004', 'Valley Victors', '2', 'L002'),
---('T005', 'Peak Players', '1', 'L003'),
---('T006', 'Field Fighters', '2', 'L003'),
---('T007', 'Spike Queens', '1', 'L004'),
---('T008', 'Volley Vixens', '2', 'L004');
-
+--INSERT INTO teams (teamID, teamName, ranking) VALUES
+INSERT INTO teams (teamID, teamName, captainID, leagueID) VALUES
+('T001', 'Team A', 1, 'L003'),
+('T002', 'Team B', 2, 'L004'),
+('T003', 'Team C', 3, 'L004'),
+('T004', 'Team D', 4, 'L004'),
+('T005', 'Team E', 5, 'L001');
 
 -- Insert into Games
-INSERT INTO games (gameID, datetime, location, teamScore1, teamScore2, gameStatus) VALUES
-(1, '2024-11-10 10:00:00', 'City Stadium', 2, 1, 'completed');
---(2, '2024-11-10 14:00:00', 'Valley Field', 'T003', 'T004', 3, 0, 'completed', 3012, 'L002'),
---(3, '2024-11-11 18:00:00', 'Peak Arena', 'T005', 'T006', 1, 1, 'completed', 3013, 'L003'),
---(4, '2024-11-11 12:00:00', 'Spike Court', 'T007', 'T008', 3, 2, 'completed', 3011, 'L004'),
---(5, '2024-11-17 10:00:00', 'City Stadium', 'T002', 'T001', 0, 0, 'upcoming', 3012, 'L001'),
---(6, '2024-11-17 14:00:00', 'Valley Field', 'T004', 'T003', 0, 0, 'upcoming', 3013, 'L002'),
---(7, '2024-11-18 18:00:00', 'Peak Arena', 'T006', 'T005', 0, 0, 'upcoming', 3011, 'L003'),
---(8, '2024-11-18 12:00:00', 'Spike Court', 'T008', 'T007', 0, 0, 'upcoming', 3012, 'L004');
---
+--INSERT INTO games (gameID, datetime, location, team1ID, team2ID, teamScore1, teamScore2, gameStatus, refereeID, leagueID) VALUES
+--(1, '2024-11-10 10:00:00', 'City Stadium', 'T001', 'T002', 2, 1, 'completed', 11, 'L001'),
+--(2, '2024-11-10 14:00:00', 'Valley Field', 'T003', 'T004', 3, 0, 'completed', 11, 'L002'),
+--(3, '2024-11-11 18:00:00', 'Peak Arena', 'T005', 'T006', 1, 1, 'completed', 11, 'L003'),
+--(4, '2024-11-11 12:00:00', 'Spike Court', 'T007', 'T008', 3, 2, 'completed', 12, 'L004'),
+--(5, '2024-11-17 10:00:00', 'City Stadium', 'T002', 'T001', 0, 0, 'upcoming', 12, 'L001'),
+--(6, '2024-11-17 14:00:00', 'Valley Field', 'T004', 'T003', 0, 0, 'upcoming', 12, 'L002'),
+--(7, '2024-11-18 18:00:00', 'Peak Arena', 'T006', 'T005', 0, 0, 'upcoming', 13, 'L003'),
+--(8, '2024-11-18 12:00:00', 'Spike Court', 'T008', 'T007', 0, 0, 'upcoming', 13, 'L004');
+
+
 ---- Insert Captains (with teamID)
 --INSERT INTO captains (userID, firstName, lastName, email, password, role, teamID)
 --VALUES (2001, 'John', 'Doe', 'john.doe@example.com', 'password123', 'captain', 'T001'), -- Assign to T001

@@ -2,6 +2,8 @@ package com.example.cms.model.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
@@ -29,7 +31,13 @@ public class League {
     @NotEmpty
     private String leagueGender;
 
+    // CONNECT TEAMS TO LEAGUE
     @OneToMany(mappedBy = "league")
+    @Nullable
     private List<Team> teams = new ArrayList<>();
+
+    // CONNECT GAMES TO LEAGUE
+    @OneToMany(mappedBy = "league")
+    private List<Game> games = new ArrayList<>();
 }
 

@@ -19,10 +19,10 @@ import java.util.List;
 @Setter
 @Table(name = "games")
 public class Game {
+
     @Id
     private long gameID;
 
-    @NotEmpty
     @DateTimeFormat
     private LocalDateTime datetime;
 
@@ -30,30 +30,29 @@ public class Game {
     private String location;
 
     @ManyToOne
-    @JoinColumn(name = "team1_ID")
+    @JoinColumn(name = "team1ID", nullable = false)
     private Team team1;
 
     @ManyToOne
-    @JoinColumn(name = "team2_ID")
+    @JoinColumn(name = "team2ID", nullable = false)
     private Team team2;
 
-    @NotEmpty
+    @Nullable
     private int teamScore1;
 
-    @NotEmpty
+    @Nullable
     private int teamScore2;
 
     @NotEmpty
     private String gameStatus;
     // upcoming, completed
 
-    @Nullable
     @ManyToOne
-    @JoinColumn(name="refereeID")
+    @Nullable
+    @JoinColumn(name = "refereeID")
     private Referee referee;
 
     @ManyToOne
-    @JoinColumn(name = "leagueId")
+    @JoinColumn(name = "leagueID")
     private League league;
-
 }

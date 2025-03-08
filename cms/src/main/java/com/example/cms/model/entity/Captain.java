@@ -17,8 +17,11 @@ import javax.persistence.Table;
 public class Captain extends User{
 
     // each team can only have one captain and one captain can only be on one team
-    @OneToOne
-    @JoinColumn(name = "teamID") // FK
+//    @OneToOne
+//    @JoinColumn(name = "teamID") // FK
+//    private Team team;
+
+    @OneToOne(mappedBy = "captain") // This is the inverse side of the relationship
     private Team team;
 
 }
