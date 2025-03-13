@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 @CrossOrigin
@@ -98,12 +101,23 @@ class AdminController {
                       @RequestParam Long refereeID,
                       @RequestParam String leagueID) {
         try {
+            // Parse the datetime string to LocalDateTime
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME; // Or your specific format
+            LocalDateTime parsedDateTime = LocalDateTime.parse(datetime, formatter);
+
+            // Format LocalDateTime back to String if needed for your repository
+            String formattedDateTime = parsedDateTime.toString(); // Or use a specific pattern if necessary
+
             adminRepository.createGame(
-                    gameID, datetime, location, team1ID, team2ID,
+                    gameID, formattedDateTime, location, team1ID, team2ID,
                     teamScore1, teamScore2, gameStatus, refereeID, leagueID
             );
             return "Game created successfully.";
+        } catch (DateTimeParseException e) {
+            System.err.println("Error parsing date/time: " + e.getMessage());
+            return "Error parsing date/time: " + e.getMessage();
         } catch (Exception e) {
+            System.err.println("Error creating game: " + e.getMessage());
             return "Error creating game: " + e.getMessage();
         }
     }
