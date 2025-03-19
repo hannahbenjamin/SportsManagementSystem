@@ -37,6 +37,17 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
             @Param("captainID") String captainID,
             @Param("leagueID") String leagueID);
 
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO captains (userID, firstName, lastName, email, role) " +
+            "VALUES (:userID, :firstName, :lastName, :email, :role)", nativeQuery = true)
+    void createCaptain(
+            @Param("userID") String userID,
+            @Param("firstName") String firstName,
+            @Param("lastName") String lastName,
+            @Param("email") String email,
+            @Param("role") String role);
+
     // Assign a captain to a team
     @Modifying
     @Transactional

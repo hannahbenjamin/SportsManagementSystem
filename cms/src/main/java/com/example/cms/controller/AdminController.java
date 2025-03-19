@@ -194,4 +194,18 @@ class AdminController {
             return "Error removing captain: " + e.getMessage();
         }
     }
+
+    @PostMapping("/captain")
+    String createTeam(@RequestParam String userID,
+                      @RequestParam String firstName,
+                      @RequestParam String lastName,
+                      @RequestParam String email,
+                      @RequestParam String role) {
+        try {
+            adminRepository.createCaptain(userID, firstName, lastName, email, role);
+            return "Captain created successfully.";
+        } catch (Exception e) {
+            return "Error creating captain: " + e.getMessage();
+        }
+    }
 }
