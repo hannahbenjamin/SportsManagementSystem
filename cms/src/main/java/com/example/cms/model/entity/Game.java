@@ -61,8 +61,4 @@ public class Game {
     @JsonBackReference("league-games")
     private League league;
 
-    //Test Function
-    public void testFunction(String gameStatus){
-        this.gameStatus = gameStatus;
-    }
 }
