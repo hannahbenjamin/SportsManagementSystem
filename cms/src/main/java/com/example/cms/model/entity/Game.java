@@ -62,6 +62,7 @@ public class Game {
     private League league;
 
     //Test Function
-
+    public void testFunction(String gameStatus){
+        this.gameStatus = gameStatus;
     }
 }
