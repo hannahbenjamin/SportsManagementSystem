@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Repository
-public interface RefereeRepository extends JpaRepository<Referee, Long> {
+public interface RefereeRepository extends JpaRepository<Referee, String> {
 
 
     //@Query("SELECT r FROM Referee r")

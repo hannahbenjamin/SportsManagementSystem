@@ -16,18 +16,21 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface CaptainRepository extends JpaRepository<Captain, Long> {
+public interface CaptainRepository extends JpaRepository<Captain, String> {
 
     // ADD PLAYER TO TEAM
     // does this by changing the player's teamID to the captains teamID
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Player p SET p.teamID = (SELECT c.teamID FROM Captain c WHERE c.userID = :captainId) WHERE p.userID = :playerId", nativeQuery = true)
-    int addPlayerToTeam(@Param("captainId") Long captainId, @Param("playerId") Long playerId);
+    @Query(value = "UPDATE players SET teamID = (SELECT t.teamID FROM teams t WHERE t.captainID = :captainId) WHERE userId = :playerId", nativeQuery = true)
+    int addPlayerToTeam(@Param("captainId") String captainId, @Param("playerId") String playerId);
 
     // Captain removes player
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Player p SET p.teamID = NULL WHERE p.userID = :playerId AND EXISTS (SELECT 1 FROM Captain c WHERE c.userID = :captainId AND c.role = 'captain' AND c.teamID = p.teamID)", nativeQuery = true)
-    int removePlayerFromTeam(@Param("captainId") Long captainId, @Param("playerId") Long playerId);
+    @Query(value = "UPDATE players p SET p.teamID = NULL WHERE p.userID = :playerId AND EXISTS (SELECT 1 FROM captains c WHERE c.userID = :captainId AND c.role = 'captain' AND c.teamID = p.teamID)", nativeQuery = true)
+    int removePlayerFromTeam(@Param("captainId") String captainId, @Param("playerId") String playerId);
+
+
+
 }

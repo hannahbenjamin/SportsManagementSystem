@@ -21,5 +21,10 @@ public class Player extends User{
     @JoinColumn(name = "teamID") // FK
     @JsonBackReference("team-players")
     private Team team;
+
+//    @ManyToOne
+//    @JoinColumn(name = "team_id") // <- must match this
+//    @JsonBackReference("team-players")
+//    private Team team;
 }
 
