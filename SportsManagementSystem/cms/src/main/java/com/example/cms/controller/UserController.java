@@ -2,7 +2,7 @@ package com.example.cms.controller;
 
 
 import com.example.cms.controller.exceptions.UserNotFoundException;
-import com.example.cms.model.entity.User;
+import com.example.cms.model.entity.*;
 import com.example.cms.model.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +74,70 @@ public class UserController {
             return ResponseEntity.ok(user);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
+        }
+    }
+// ONLY NEW THING THAT CAN BE DELTED
+    @PostMapping("/users/create")
+    public ResponseEntity<String> createUser(
+            @RequestParam String userID,
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String email,
+            @RequestParam String password,
+            @RequestParam String role) {
+        try {
+            switch (role.toLowerCase()) {
+                case "captain":
+                    Captain captain = new Captain();
+                    captain.setUserID(userID);
+                    captain.setFirstName(firstName);
+                    captain.setLastName(lastName);
+                    captain.setEmail(email);
+                    captain.setPassword(password);
+                    captain.setRole(role);
+                    captainRepository.save(captain);
+                    break;
+
+                case "player":
+                    Player player = new Player();
+                    player.setUserID(userID);
+                    player.setFirstName(firstName);
+                    player.setLastName(lastName);
+                    player.setEmail(email);
+                    player.setPassword(password);
+                    player.setRole(role);
+                    playerRepository.save(player);
+                    break;
+
+                case "referee":
+                    Referee referee = new Referee();
+                    referee.setUserID(userID);
+                    referee.setFirstName(firstName);
+                    referee.setLastName(lastName);
+                    referee.setEmail(email);
+                    referee.setPassword(password);
+                    referee.setRole(role);
+                    refereeRepository.save(referee);
+                    break;
+
+                case "admin":
+                    Admin admin = new Admin();
+                    admin.setUserID(userID);
+                    admin.setFirstName(firstName);
+                    admin.setLastName(lastName);
+                    admin.setEmail(email);
+                    admin.setPassword(password);
+                    admin.setRole(role);
+                    adminRepository.save(admin);
+                    break;
+
+                default:
+                    return ResponseEntity.badRequest().body("Invalid role specified.");
+            }
+
+            return ResponseEntity.ok("User created successfully as " + role);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error creating user: " + e.getMessage());
         }
     }
 
