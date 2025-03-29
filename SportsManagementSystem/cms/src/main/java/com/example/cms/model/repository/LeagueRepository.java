@@ -34,4 +34,3 @@ public interface LeagueRepository extends JpaRepository<League, Long> {
 //    @Query("SELECT t FROM Team t WHERE t.league.leagueID = :leagueID ORDER BY t.ranking")
 //    List<Team> getStandingsByLeagueId(Long leagueID);
 }
-

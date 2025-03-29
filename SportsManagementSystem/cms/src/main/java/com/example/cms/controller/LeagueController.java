@@ -27,7 +27,7 @@ public class LeagueController {
     }
 
     // Get all leagues
-    @GetMapping("")
+    @GetMapping()
     public List<League> retrieveAllLeagues() {
         return leagueRepository.findAll();
     }

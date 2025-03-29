@@ -1,8 +1,11 @@
 package com.example.cms.controller;
 
-
+import com.example.cms.controller.dto.LoginResponseDTO;
 import com.example.cms.controller.exceptions.UserNotFoundException;
-import com.example.cms.model.entity.*;
+import com.example.cms.model.entity.Captain;
+import com.example.cms.model.entity.Player;
+import com.example.cms.model.entity.Referee;
+import com.example.cms.model.entity.User;
 import com.example.cms.model.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,102 +41,61 @@ public class UserController {
         return repository.findAll();
     }
 
-    // RETRIEVE USER based on userId
-//    @GetMapping("/users/{userId}")
-//    User retrieveUser(@PathVariable("userId") Long userId) {
-//        return repository.findById(userId)
-//                .orElseThrow(() -> new UserNotFoundException(userId));
-//    }
-
-    @PostMapping("/login/{role}")
-    public ResponseEntity<?> loginByRole(
-            @PathVariable String role,
+    @PostMapping("/login")
+    public ResponseEntity<?> login(
             @RequestParam String email,
             @RequestParam String password) {
 
         User user = null;
+        String role = null;
 
-        switch (role.toLowerCase()) {
-            case "captain":
-                user = captainRepository.findByEmailAndPassword(email, password);
-                break;
-            case "player":
-                user = playerRepository.findByEmailAndPassword(email, password);
-                break;
-            case "admin":
-                user = adminRepository.findByEmailAndPassword(email, password);
-                break;
-            case "referee":
-                user = refereeRepository.findByEmailAndPassword(email, password);
-                break;
-            default:
-                return ResponseEntity.badRequest().body("Invalid role");
+        if ((user = captainRepository.findByEmailAndPassword(email, password)) != null) {
+            role = "captain";
+        } else if ((user = playerRepository.findByEmailAndPassword(email, password)) != null) {
+            role = "player";
+        } else if ((user = adminRepository.findByEmailAndPassword(email, password)) != null) {
+            role = "admin";
+        } else if ((user = refereeRepository.findByEmailAndPassword(email, password)) != null) {
+            role = "referee";
+        }
+        else {
+            role = "issue";
         }
 
         if (user != null) {
-            return ResponseEntity.ok(user);
+            System.out.println("User role: " + role);  // Log the role to verify it's correct
+            // Return the user details along with the role
+            return ResponseEntity.ok(new LoginResponseDTO(user.getUserID(), user.getFirstName(), user.getLastName(), user.getEmail(), role));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
-// ONLY NEW THING THAT CAN BE DELTED
+
+    // registration
     @PostMapping("/users/create")
     public ResponseEntity<String> createUser(
-            @RequestParam String userID,
+//            @RequestParam String userID,
             @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam String email,
-            @RequestParam String password,
-            @RequestParam String role) {
+            @RequestParam String password) {
         try {
-            switch (role.toLowerCase()) {
-                case "captain":
-                    Captain captain = new Captain();
-                    captain.setUserID(userID);
-                    captain.setFirstName(firstName);
-                    captain.setLastName(lastName);
-                    captain.setEmail(email);
-                    captain.setPassword(password);
-                    captain.setRole(role);
-                    captainRepository.save(captain);
-                    break;
+            String role = "player"; // default is player
 
-                case "player":
-                    Player player = new Player();
-                    player.setUserID(userID);
-                    player.setFirstName(firstName);
-                    player.setLastName(lastName);
-                    player.setEmail(email);
-                    player.setPassword(password);
-                    player.setRole(role);
-                    playerRepository.save(player);
-                    break;
+            // Generate the next available user ID
+            Integer maxUserID = playerRepository.findMaxUserID();
+            Integer nextUserID = (maxUserID != null) ? maxUserID + 1 : 1;
+            String userID = nextUserID.toString(); // Store as a numeric string
 
-                case "referee":
-                    Referee referee = new Referee();
-                    referee.setUserID(userID);
-                    referee.setFirstName(firstName);
-                    referee.setLastName(lastName);
-                    referee.setEmail(email);
-                    referee.setPassword(password);
-                    referee.setRole(role);
-                    refereeRepository.save(referee);
-                    break;
 
-                case "admin":
-                    Admin admin = new Admin();
-                    admin.setUserID(userID);
-                    admin.setFirstName(firstName);
-                    admin.setLastName(lastName);
-                    admin.setEmail(email);
-                    admin.setPassword(password);
-                    admin.setRole(role);
-                    adminRepository.save(admin);
-                    break;
-
-                default:
-                    return ResponseEntity.badRequest().body("Invalid role specified.");
-            }
+            Player player = new Player();
+            player.setUserID(userID);
+            player.setFirstName(firstName);
+            player.setLastName(lastName);
+            player.setEmail(email);
+            player.setPassword(password);
+            player.setRole(role);
+            playerRepository.save(player);
 
             return ResponseEntity.ok("User created successfully as " + role);
         } catch (Exception e) {
@@ -142,5 +104,4 @@ public class UserController {
     }
 
 }
-
 

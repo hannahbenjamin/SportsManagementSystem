@@ -30,5 +30,8 @@ public interface PlayerRepository extends JpaRepository<Player, String> {
 
     Player findByEmailAndPassword(String email, String password);
 
-}
+    @Query("SELECT COALESCE(MAX(CAST(p.userID AS integer)), 0) FROM Player p")
+    Integer findMaxUserID();
 
+
+}
